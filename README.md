@@ -1,4 +1,3 @@
-# consola2023
 using System;
 using System.IO;
 
@@ -16,15 +15,47 @@ class OrdenamientoBurbuja : Ordenamiento
 {
     public override void Ordenar(int[] numeros)
     {
-        //... (código de Burbuja)
+        int n = numeros.Length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - i - 1; j++)
+            {
+                if (numeros[j] > numeros[j + 1])
+                {
+                    int temp = numeros[j];
+                    numeros[j] = numeros[j + 1];
+                    numeros[j + 1] = temp;
+                }
+            }
+        }
+
     }
 }
-
 class OrdenamientoShell : Ordenamiento
 {
     public override void Ordenar(int[] numeros)
     {
-        //... (código de Shell)
+        int n = numeros.Length;
+        int gap = n / 2;
+
+        while (gap > 0)
+        {
+            for (int i = gap; i < n; i++)
+            {
+                int temp = numeros[i];
+                int j = i;
+
+                while (j >= gap && numeros[j - gap] > temp)
+                {
+                    numeros[j] = numeros[j - gap];
+                    j -= gap;
+                }
+
+                numeros[j] = temp;
+            }
+
+            gap /= 2;
+        }
     }
 }
 
@@ -32,7 +63,23 @@ class OrdenamientoSeleccion : Ordenamiento
 {
     public override void Ordenar(int[] numeros)
     {
-        //... (código de Seleccion)
+        int n = numeros.Length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            int minIndex = i;
+
+            for (int j = i + 1; j < n; j++)
+            {
+                if (numeros[j] < numeros[minIndex])
+                {
+                    minIndex = j;
+                }
+            }
+
+            int temp = numeros[minIndex];
+            numeros[minIndex] = numeros[i];
+            numeros[i] = temp;
+        }
     }
 }
 
@@ -40,9 +87,23 @@ class OrdenamientoInsercion : Ordenamiento
 {
     public override void Ordenar(int[] numeros)
     {
-        //... (código de Insercion)
+        int n = numeros.Length;
+        for (int i = 1; i < n; i++)
+        {
+            int key = numeros[i];
+            int j = i - 1;
+
+            while (j >= 0 && numeros[j] > key)
+            {
+                numeros[j + 1] = numeros[j];
+                j--;
+            }
+
+            numeros[j + 1] = key;
+        }
     }
 }
+
 
 class Program
 {
